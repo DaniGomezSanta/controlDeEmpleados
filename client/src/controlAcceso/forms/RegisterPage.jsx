@@ -16,7 +16,7 @@ export const RegisterPage = () => {
     validate={(valores)=> {
       let errores ={};
       if(!valores.cedula){
-        errores.cedula = 'Porfavor ingresa la cedula'
+        errores.cedula = 'Porfavor ingresa documento de indentidad'
       }else if(!/^[0-9]+$/.test(valores.cedula)) {
         errores.cedula = 'Solo numeros'
       }
@@ -25,6 +25,7 @@ export const RegisterPage = () => {
      onSubmit={(valores, {resetForm})=> {
       resetForm(); 
       setFormularioEnviado(true)
+      setTimeout(()=> setFormularioEnviado(false), 5000)
       console.log('Formulario enviado')
      }}>
           {( {values, errors, touched, handleSubmit, handleChange, handleBlur} )=> (
