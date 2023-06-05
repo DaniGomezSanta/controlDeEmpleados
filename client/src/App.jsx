@@ -1,11 +1,12 @@
 import React from "react"
+import { AppRouter } from "./routes/AppRouter"
 
 function App() {
 
 
   return (
    <>
-   <h1>Hola mundo</h1>
+    <AppRouter/>
    </>
   )
 }
