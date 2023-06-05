@@ -1,11 +1,15 @@
 import React, { useState } from 'react'; 
 import { Field, Formik } from "formik";
+import {crearEmpleado} from "../../store/actions/index"
+import { useDispatch } from 'react-redux';
 
 
 export const CrearEmpleado = () => {
 
   const [formularioEnviado, setFormularioEnviado] = useState(false)
   const [autorizado, setAutorizado] = useState('');
+
+  const dispatch = useDispatch();
   return (
     <>
     <Formik
@@ -29,11 +33,12 @@ export const CrearEmpleado = () => {
       if(!valores.apellidos){errores.apellidos = 'Porfavor ingresa apellido'}
       if(!valores.tipoDocumento){errores.tipoDocumento = 'Porfavor ingresa tipo Documento'}
       if (!valores.autorizacion) { errores.autorizacion = 'Por favor selecciona (activo o inactivo)'}
-      if (!valores.horarioIngreso) { errores.horarioIngreso = 'Por favor ingresa la hora'}
-      if (!valores.horarioSalida) { errores.horarioSalida = 'Por favor ingresa la hora'}
-      return errores
+      // if (!valores.horarioIngreso) { errores.horarioIngreso = 'Por favor ingresa la hora'}
+      // if (!valores.horarioSalida) { errores.horarioSalida = 'Por favor ingresa la hora'}
+      // return errores
     }}
      onSubmit={(valores, {resetForm})=> {
+      dispatch(crearEmpleado(valores)); 
       resetForm(); 
       setFormularioEnviado(true)
       setTimeout(()=> setFormularioEnviado(false), 5000)
@@ -91,7 +96,7 @@ export const CrearEmpleado = () => {
                 />
                 { touched.numeroDocumento && errors.numeroDocumento && <div className='error'>{errors.numeroDocumento}</div>}
 
-                <label htmlFor='cedula'>Horario Ingreso</label>
+                {/* <label htmlFor='cedula'>Horario Ingreso</label>
                 <input 
                 type='text' 
                 id='horarioIngreso' 
@@ -113,14 +118,14 @@ export const CrearEmpleado = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 />
-                { touched.horarioSalida && errors.horarioSalida && <div className='error'>{errors.horarioSalida}</div>}
+                { touched.horarioSalida && errors.horarioSalida && <div className='error'>{errors.horarioSalida}</div>} */}
 
              <div>
                 <label>
-                    <Field type= 'radio' name='autorizacion' value='activo'/>Activo
+                    <Field type= 'radio' name='autorizacion' value='true'/>Activo
                 </label>
                 <label>
-                    <Field type= 'radio' name='autorizacion' value='inactivo'/>Inactivo
+                    <Field type= 'radio' name='autorizacion' value='false'/>Inactivo
                 </label>
                 { touched.autorizacion && errors.autorizacion && <div className='error'>{errors.autorizacion}</div>}
              </div>
@@ -131,6 +136,6 @@ export const CrearEmpleado = () => {
           )}
 
         </Formik>
-    </>
+    </> 
   )
 }
