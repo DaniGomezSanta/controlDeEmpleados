@@ -29,6 +29,8 @@ export const CrearEmpleado = () => {
       if(!valores.apellidos){errores.apellidos = 'Porfavor ingresa apellido'}
       if(!valores.tipoDocumento){errores.tipoDocumento = 'Porfavor ingresa tipo Documento'}
       if (!valores.autorizacion) { errores.autorizacion = 'Por favor selecciona (activo o inactivo)'}
+      if (!valores.horarioIngreso) { errores.horarioIngreso = 'Por favor ingresa la hora'}
+      if (!valores.horarioSalida) { errores.horarioSalida = 'Por favor ingresa la hora'}
       return errores
     }}
      onSubmit={(valores, {resetForm})=> {
@@ -88,6 +90,30 @@ export const CrearEmpleado = () => {
                 onBlur={handleBlur}
                 />
                 { touched.numeroDocumento && errors.numeroDocumento && <div className='error'>{errors.numeroDocumento}</div>}
+
+                <label htmlFor='cedula'>Horario Ingreso</label>
+                <input 
+                type='text' 
+                id='horarioIngreso' 
+                name='horarioIngreso' 
+                placeholder='Horario ingreso' 
+                value={values.horarioIngreso}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                />
+                { touched.horarioIngreso && errors.horarioIngreso && <div className='error'>{errors.horarioIngreso}</div>}
+
+                <label htmlFor='cedula'>Horario Salida</label>
+                <input 
+                type='text' 
+                id='horarioSalida' 
+                name='horarioSalida' 
+                placeholder='Horario salida' 
+                value={values.horarioSalida}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                />
+                { touched.horarioSalida && errors.horarioSalida && <div className='error'>{errors.horarioSalida}</div>}
 
              <div>
                 <label>
