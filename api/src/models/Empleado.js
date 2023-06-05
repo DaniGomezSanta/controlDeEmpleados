@@ -3,11 +3,11 @@ import { sequelize }  from '../database/database.js'
 import { Autorizacion } from './Autorizacion.js';
 
 export const Empleado = sequelize.define('empleado', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+    // id: {
+    //     type: DataTypes.INTEGER,
+    //     // primaryKey: true,
+    //     autoIncrement: true
+    // },
     nombre: { 
         type: DataTypes.STRING,
         allowNull: false
@@ -22,6 +22,7 @@ export const Empleado = sequelize.define('empleado', {
     },
     numeroDocumento: {
         type: DataTypes.STRING,
+        primaryKey: true,
         allowNull: false
     },
     autorizacion: {
@@ -30,7 +31,6 @@ export const Empleado = sequelize.define('empleado', {
     }
 });
 
-Empleado.hasMany(Autorizacion, { foreignKey: 'empleadoId' });
-
+Empleado.hasMany(Autorizacion, { foreignKey: 'numeroDocumento' });
 
  

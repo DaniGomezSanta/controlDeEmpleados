@@ -5,9 +5,9 @@ import { Autorizacion } from "../models/Autorizacion.js";
 export const postMovimientos = async(req, res) => {
 
     try {
-        const { empleadoId, sentido, horario } = req.body;
+        const { numeroDocumento, sentido, horario } = req.body;
 
-        if(!empleadoId || !sentido ) {
+        if(!numeroDocumento || !sentido ) {
           return res.status(400).json({error: 'Faltan parametros'});
         }
 
@@ -17,7 +17,7 @@ export const postMovimientos = async(req, res) => {
 
         const ultimoMovimiento = await Autorizacion.findOne({
             where:{
-                empleadoId
+                numeroDocumento
             },
             order: [['horario', 'DESC']],
         });
@@ -41,7 +41,7 @@ export const postMovimientos = async(req, res) => {
         const currentDateTime = new Date();
         // Crea el movimiento en la base de datos utilizando el modelo de Sequelize
         const movimiento = await Autorizacion.create({
-          empleadoId,
+          numeroDocumento,
           sentido,
           horario: currentDateTime
         });
