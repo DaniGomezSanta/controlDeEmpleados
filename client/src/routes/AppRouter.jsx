@@ -1,7 +1,8 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
-import { RegisterPage } from '../controlAcceso/forms/RegisterPage';
-import { CrearEmpleado } from '../controlAdmin/components/forms/crearEmpleado';
+import { RegisterPage } from '../views/forms/RegisterPage';
+import { CrearEmpleado } from '../views/forms/CrearEmpleado';
+import { TablaEmpleados } from '../views/tablas/tablaEmpleados';
 
 
 export const AppRouter = () => {
@@ -12,6 +13,7 @@ export const AppRouter = () => {
 
         {/* registro de ingreso y salida */}
         <Route path='/*' element={<RegisterPage/>}/>
+        <Route path='/empleados' element={<TablaEmpleados/>}/>
     </Routes>
   )
 }

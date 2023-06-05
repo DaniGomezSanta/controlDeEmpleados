@@ -5,6 +5,7 @@ import { Field, Formik } from "formik";
 export const CrearEmpleado = () => {
 
   const [formularioEnviado, setFormularioEnviado] = useState(false)
+  const [autorizado, setAutorizado] = useState('');
   return (
     <>
     <Formik
@@ -27,6 +28,7 @@ export const CrearEmpleado = () => {
       if(!valores.nombre){errores.nombre = 'Porfavor ingresa nombre'}
       if(!valores.apellidos){errores.apellidos = 'Porfavor ingresa apellido'}
       if(!valores.tipoDocumento){errores.tipoDocumento = 'Porfavor ingresa tipo Documento'}
+      if (!valores.autorizacion) { errores.autorizacion = 'Por favor selecciona (activo o inactivo)'}
       return errores
     }}
      onSubmit={(valores, {resetForm})=> {
@@ -94,6 +96,7 @@ export const CrearEmpleado = () => {
                 <label>
                     <Field type= 'radio' name='autorizacion' value='inactivo'/>Inactivo
                 </label>
+                { touched.autorizacion && errors.autorizacion && <div className='error'>{errors.autorizacion}</div>}
              </div>
               </div>
               <button type='submit'>Crear Empleado</button>
