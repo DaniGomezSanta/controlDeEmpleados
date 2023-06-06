@@ -44,7 +44,7 @@ export const getEmpleado = async (req, res) => {
 
 var id = 3;
 export const crearEmpleado = async (req, res) => {
-  const { nombre, apellidos, tipoDocumento, numeroDocumento, autorizacion } =
+  const { nombre, apellidos, tipoDocumento, numeroDocumento, autorizacion, image } =
     req.body;
 
   try {
@@ -77,6 +77,7 @@ export const crearEmpleado = async (req, res) => {
         tipoDocumento,
         numeroDocumento,
         autorizacion,
+        image
       });
       id++;
       res.json(nuevoEmpelado);

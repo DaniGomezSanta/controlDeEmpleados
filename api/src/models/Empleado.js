@@ -28,7 +28,11 @@ export const Empleado = sequelize.define('empleado', {
     autorizacion: {
         type: DataTypes.BOOLEAN,
         allowNull: false
-    }
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
 });
 
 Empleado.hasMany(Autorizacion, { foreignKey: 'numeroDocumento' });
