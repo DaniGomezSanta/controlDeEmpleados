@@ -59,9 +59,10 @@ export const RegisterPage = () => {
       >
         {({ values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className="formulario" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="numeroDocumento">Cedula</label>
+            <div className="form-floating mb-3">
+              <label htmlFor="numeroDocumento"  for="floatingInput"></label>
               <Field
+                className='class="form-control"'
                 type="text"
                 id="numeroDocumento"
                 name="numeroDocumento"
@@ -71,22 +72,22 @@ export const RegisterPage = () => {
                 onBlur={handleBlur}
               />
               {touched.numeroDocumento && errors.numeroDocumento && (
-                <div className="error">{errors.numeroDocumento}</div>
+                <div className="--bs-danger">{errors.numeroDocumento}</div>
               )}
             </div>
-            <div>
-              <label>
+            <div className="form-check">
+              <label className="form-check-label" for="flexRadioDefault1">
                 <Field type="radio" name="sentido" value="ingreso" checked={values.sentido === 'ingreso'} />
                 Ingreso
               </label>
-              <label>
+              <label className="form-check-label">
                 <Field type="radio" name="sentido" value="salida" checked={values.sentido === 'salida'} />
                 Salida
               </label>
-              {touched.sentido && errors.sentido && <div className="error">{errors.sentido}</div>}
+              {touched.sentido && errors.sentido && <div className="--bs-danger">{errors.sentido}</div>}
             </div>
             <div>
-              <button type="submit">Registrar</button>
+              <button type="submit" className="btn btn-outline-success">Registrar</button>
               {formularioEnviado && (
                 <p>
                   {sentidoSeleccionado === 'ingreso'
