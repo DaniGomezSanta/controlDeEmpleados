@@ -87,9 +87,6 @@ export const RegisterPage = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       />
-                    {touched.numeroDocumento && errors.numeroDocumento && (
-                      <div className="error">{errors.numeroDocumento}</div>
-                      )}
                   </div>
                   <div className="mb-4 form-check" >
                     <label className="form-check-label">
@@ -114,9 +111,6 @@ export const RegisterPage = () => {
                         />
                       Salida
                     </label>
-                    {touched.sentido && errors.sentido && (
-                      <div className="error">{errors.sentido}</div>
-                      )}
                   </div>
                   <div className="d-grid">
                     <button type="submit" class="btn btn-success">Registrar</button>
