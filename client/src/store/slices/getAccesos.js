@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   accesos: [],
+  error:''
 };
 export const getAllAccesos = createAsyncThunk(
   "getAllAccesos/getAllAccesos",
@@ -18,12 +19,15 @@ const getAccesos = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getAllAccesos.pending, (state) => {
       state.loading = true;
+      state.error = "";
     });
     builder.addCase(getAllAccesos.fulfilled, (state, action) => {
       state.accesos = action.payload;
+      state.error = "";
     });
     builder.addCase(getAllAccesos.rejected, (state, action) => {
       state.accesos = [];
+      state.error = action.error.message;
     });
   },
 });

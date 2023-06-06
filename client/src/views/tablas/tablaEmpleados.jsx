@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllEmpleados } from "../../store/slices/getEmpleados";
 import { Link } from "react-router-dom";
+import { NavBar } from "../../features/NavBar";
 
 export function TablaEmpleados() {
   const dispatch = useDispatch();
@@ -15,10 +16,16 @@ export function TablaEmpleados() {
 
   return (
     <div>
-        <Link to='/crearEmpleado'>
-            <button type="button" class="btn btn-success">
+      <NavBar/>
+        <Link to='/crearEmpleado' className="mb-2 mr-2">
+            <button type="button" class="btn btn-success ">
                 Agregar empleado +
             </button>
+        </Link>
+
+
+        <Link to='/accesos' className="mb-2 mr-2">
+        <button type="button" class="btn btn-outline-info">Tablero Trafico</button>
         </Link>
       <table class="table">
         <thead>

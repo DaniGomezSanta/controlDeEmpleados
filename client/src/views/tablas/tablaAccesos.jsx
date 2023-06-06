@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllAccesos } from "../../store/slices/getAccesos";
 import { getAllEmpleados } from "../../store/slices/getEmpleados";
+import { NavBar } from "../../features/NavBar";
 
 
 export function TablaAccesos() {
@@ -35,6 +36,7 @@ export function TablaAccesos() {
 
   return (
     <div>
+        <NavBar/>
       <table className="table">
         <thead>
           <tr>

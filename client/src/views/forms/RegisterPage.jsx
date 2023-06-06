@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import {accesoRegistro} from '../../store/actions/index'
 import { getAllEmpleados } from '../../store/slices/getEmpleados';
 import { getAllAccesos } from '../../store/slices/getAccesos';
+import { NavBar } from '../../features/NavBar';
 
 
 export const RegisterPage = () => {
@@ -25,6 +26,7 @@ export const RegisterPage = () => {
 
   return (
     <>
+      <NavBar/>
       <Clock />
       <Formik
         initialValues={{
