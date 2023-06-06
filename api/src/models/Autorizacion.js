@@ -20,3 +20,5 @@ export const Autorizacion = sequelize.define('autorizacion', {
 
 
 
+
+

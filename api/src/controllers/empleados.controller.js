@@ -28,6 +28,7 @@ export const getEmpleado = async (req, res) => {
   const { id } = req.params;
 
   try {
+
     const empleado = await Empleado.findOne({
       where: {
         id,
@@ -47,6 +48,19 @@ export const crearEmpleado = async (req, res) => {
     req.body;
 
   try {
+
+    if(!nombre || !apellidos || !tipoDocumento || !numeroDocumento || !autorizacion ) {
+      return res.status(400).json({message: 'Faltan parametros'});
+    }
+
+    if (numeroDocumento === /^[0-9]+$/.test) {
+      return res.status(400).json({message: 'Solo numeros en numero de documento'});
+    } 
+
+    if(nombre | apellidos | tipoDocumento === /^[A-Za-z]+$/.test){
+      return res.status(400).json({message: 'Solo letras en nombre, apellido y tipo de documento'});
+    }
+
     const empleadoExiste = await Empleado.findOne({
       where: { [Op.and]: [{ numeroDocumento: numeroDocumento }] },
     });
@@ -105,6 +119,7 @@ export const deleteEmpleado = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
 
 
 
