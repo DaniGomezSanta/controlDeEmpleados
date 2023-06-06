@@ -4,17 +4,23 @@ import Clock from '../../controlAcceso/components/views/reloj';
 import { useDispatch } from 'react-redux';
 import {accesoRegistro} from '../../store/actions/index'
 import { getAllEmpleados } from '../../store/slices/getEmpleados';
+import { getAllAccesos } from '../../store/slices/getAccesos';
 
 
 export const RegisterPage = () => {
   const [formularioEnviado, setFormularioEnviado] = useState(false);
   const [sentidoSeleccionado, setSentidoSeleccionado] = useState('');
 
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllEmpleados())
   }, [])
+
+  useEffect(() => {
+    dispatch(getAllAccesos()); 
+  }, []);
   
 
   return (
@@ -33,11 +39,12 @@ export const RegisterPage = () => {
           } else if (!/^[0-9]+$/.test(valores.numeroDocumento)) {
             errores.numeroDocumento = 'Solo números';
           }
-          if (!valores.sentido) {
-            errores.sentido = 'Por favor selecciona el sentido (ingreso o salida)';
-          }
+          if (!valores.sentido) 
+            errores.sentido = 'Por favor selecciona el sentido (ingreso o salida)';   
           return errores;
         }}
+
+
         onSubmit={(valores, { resetForm }) => {
           dispatch(accesoRegistro(valores));
           resetForm();
@@ -46,6 +53,7 @@ export const RegisterPage = () => {
           setSentidoSeleccionado(valores.sentido);
           console.log('Formulario enviado');
         }}
+        
       >
         {({ values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className="formulario" onSubmit={handleSubmit}>

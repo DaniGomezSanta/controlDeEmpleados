@@ -1,7 +1,8 @@
-import React, { useState } from 'react'; 
+import React, { useEffect, useState } from 'react'; 
 import { Field, Formik } from "formik";
 import {crearEmpleado} from "../../store/actions/index"
 import { useDispatch } from 'react-redux';
+import { getAllEmpleados } from '../../store/slices/getEmpleados';
 
 
 export const CrearEmpleado = () => {
@@ -10,6 +11,10 @@ export const CrearEmpleado = () => {
   const [autorizado, setAutorizado] = useState('');
 
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getAllEmpleados())
+  }, [])
   return (
     <>
     <Formik
@@ -37,8 +42,11 @@ export const CrearEmpleado = () => {
       // if (!valores.horarioSalida) { errores.horarioSalida = 'Por favor ingresa la hora'}
       // return errores
     }}
+
      onSubmit={(valores, {resetForm})=> {
       dispatch(crearEmpleado(valores)); 
+
+      
       resetForm(); 
       setFormularioEnviado(true)
       setTimeout(()=> setFormularioEnviado(false), 5000)

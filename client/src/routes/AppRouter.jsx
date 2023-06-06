@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { RegisterPage } from '../views/forms/RegisterPage';
 import { CrearEmpleado } from '../views/forms/CrearEmpleado';
 import { TablaEmpleados } from '../views/tablas/tablaEmpleados';
+import { TablaAccesos } from '../views/tablas/tablaAccesos';
 
 
 export const AppRouter = () => {
@@ -14,6 +15,7 @@ export const AppRouter = () => {
         {/* registro de ingreso y salida */}
         <Route path='/*' element={<RegisterPage/>}/>
         <Route path='/empleados' element={<TablaEmpleados/>}/>
+        <Route path='/accesos' element={<TablaAccesos/>}/>
     </Routes>
   )
 }
