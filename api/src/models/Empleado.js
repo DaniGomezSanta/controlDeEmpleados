@@ -31,7 +31,7 @@ export const Empleado = sequelize.define('empleado', {
     },
     image: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 });
 
