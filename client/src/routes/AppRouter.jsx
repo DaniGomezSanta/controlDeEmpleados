@@ -13,7 +13,7 @@ export const AppRouter = () => {
         <Route path='/crearEmpleado' element={<CrearEmpleado/>}/>
         {/* registro de ingreso y salida */}
         <Route path='/' element={<RegisterPage/>}/>
-        <Route path='/empleados' element={<TablaEmpleados/>}/>
+        <Route path='/admin' element={<TablaEmpleados/>}/>
         <Route path='/accesos' element={<TablaAccesos/>}/>
     </Routes>
   )

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllEmpleados } from "../../store/slices/getEmpleados";
 import { errorRemove } from "../../store/slices/erroresFormEmpleado";
 import swal from "sweetalert";
-import { NavBar } from "../../features/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export const CrearEmpleado = () => {
   const [formularioEnviado, setFormularioEnviado] = useState(false);
@@ -14,6 +14,7 @@ export const CrearEmpleado = () => {
 
   console.log("error en crear empleado", errorAuth.message);
   const dispatch = useDispatch();
+  const navigate =useNavigate()
 
   useEffect(() => {
     dispatch(getAllEmpleados());
@@ -37,7 +38,6 @@ export const CrearEmpleado = () => {
 
   return (
     <>
-    <NavBar/>
       <Formik
         initialValues={{
           nombre: "",
@@ -46,30 +46,7 @@ export const CrearEmpleado = () => {
           numeroDocumento: "",
           autorizacion: "",
         }}
-        validate={(valores) => {
-          let errores = {};
-          if (!valores.numeroDocumento) {
-            errores.numeroDocumento =
-              "Porfavor ingresa documento de indentidad";
-          } else if (!/^[0-9]+$/.test(valores.numeroDocumento)) {
-            errores.numeroDocumento = "Solo numeros";
-          }
-          if (!valores.nombre) {
-            errores.nombre = "Porfavor ingresa nombre";
-          }
-          if (!valores.apellidos) {
-            errores.apellidos = "Porfavor ingresa apellido";
-          }
-          if (!valores.tipoDocumento) {
-            errores.tipoDocumento = "Porfavor ingresa tipo Documento";
-          }
-          if (!valores.autorizacion) {
-            errores.autorizacion = "Por favor selecciona (activo o inactivo)";
-          }
-          // if (!valores.horarioIngreso) { errores.horarioIngreso = 'Por favor ingresa la hora'}
-          // if (!valores.horarioSalida) { errores.horarioSalida = 'Por favor ingresa la hora'}
-          // return errores
-        }}
+       
         onSubmit={(valores, { resetForm }) => {
           dispatch(crearEmpleado(valores));
           swal({
@@ -77,7 +54,7 @@ export const CrearEmpleado = () => {
             text: "empleado creado!",
             icon: "success",
           });
-          navigate("/empleados");
+          navigate("/admin");
           resetForm();
         }}
       >
@@ -101,9 +78,7 @@ export const CrearEmpleado = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.nombre && errors.nombre && (
-                <div className="error">{errors.nombre}</div>
-              )}
+            
 
               <label htmlFor="apellidos">Apellidos</label>
               <input
@@ -115,10 +90,7 @@ export const CrearEmpleado = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.apellidos && errors.apellidos && (
-                <div className="error">{errors.apellidos}</div>
-              )}
-
+             
               <label htmlFor="tipoDocumento">Tipo Documento</label>
               <input
                 type="text"
@@ -129,9 +101,7 @@ export const CrearEmpleado = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.tipoDocumento && errors.tipoDocumento && (
-                <div className="error">{errors.tipoDocumento}</div>
-              )}
+            
 
               <label htmlFor="cedula">Numero Documento</label>
               <input
@@ -143,9 +113,7 @@ export const CrearEmpleado = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.numeroDocumento && errors.numeroDocumento && (
-                <div className="error">{errors.numeroDocumento}</div>
-              )}
+             
 
               {/* <label htmlFor='cedula'>Horario Ingreso</label>
                 <input 
@@ -180,9 +148,7 @@ export const CrearEmpleado = () => {
                   <Field type="radio" name="autorizacion" value="false" />
                   Inactivo
                 </label>
-                {touched.autorizacion && errors.autorizacion && (
-                  <div className="error">{errors.autorizacion}</div>
-                )}
+                
               </div>
             </div>
             <button type="submit">Crear Empleado</button>

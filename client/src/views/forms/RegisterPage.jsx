@@ -1,104 +1,139 @@
-import React, { useEffect, useState } from 'react';
-import { Field, Form, Formik } from 'formik';
-import Clock from '../../controlAcceso/components/views/reloj';
-import { useDispatch } from 'react-redux';
-import {accesoRegistro} from '../../store/actions/index'
-import { getAllEmpleados } from '../../store/slices/getEmpleados';
-import { getAllAccesos } from '../../store/slices/getAccesos';
-import { NavBar } from '../../features/NavBar';
+import React, { useEffect, useState } from "react";
+import { Field, Form, Formik } from "formik";
+import Clock from "../../controlAcceso/components/views/reloj";
+import { useDispatch, useSelector } from "react-redux";
+import { accesoRegistro } from "../../store/actions/index";
+import { getAllEmpleados } from "../../store/slices/getEmpleados";
+import { getAllAccesos } from "../../store/slices/getAccesos";
+import { errorRemoveAuto } from "../../store/slices/erroresFormAutorizacion";
+import { NavBar } from "../../features/NavBar";
 
 
 export const RegisterPage = () => {
   const [formularioEnviado, setFormularioEnviado] = useState(false);
-  const [sentidoSeleccionado, setSentidoSeleccionado] = useState('');
+  const [sentidoSeleccionado, setSentidoSeleccionado] = useState("");
 
+  const errorAuth = useSelector((state) => state.erroresAuto.errorFormAuto);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllEmpleados())
-  }, [])
+    dispatch(getAllEmpleados());
+  }, []);
 
   useEffect(() => {
-    dispatch(getAllAccesos()); 
+    dispatch(getAllAccesos());
   }, []);
-  
+
+  useEffect(() => {
+    dispatch(errorRemoveAuto());
+
+    if (errorAuth.length === 0) {
+      return;
+    } else {
+      swal({
+        title: "Error!",
+        text: errorAuth.message,
+        icon: "error",
+        button: "ok",
+      });
+    }
+    /* } */
+  }, [errorAuth]);
 
   return (
     <>
-      <NavBar/>
-      <Clock />
+    <NavBar/>
       <Formik
         initialValues={{
-          numeroDocumento: '',
-          sentido: '',
-          horario: ''
+          numeroDocumento: "",
+          sentido: "",
+          horario: "",
         }}
-        validate={(valores) => {
-          let errores = {};
-          if (!valores.numeroDocumento) {
-            errores.numeroDocumento = 'Por favor ingresa documento de identidad';
-          } else if (!/^[0-9]+$/.test(valores.numeroDocumento)) {
-            errores.numeroDocumento = 'Solo números';
-          }
-          if (!valores.sentido) 
-            errores.sentido = 'Por favor selecciona el sentido (ingreso o salida)';   
-          return errores;
-        }}
-
-
+       
         onSubmit={(valores, { resetForm }) => {
           dispatch(accesoRegistro(valores));
+          swal({
+            title: "Done!",
+            text: "Registrado!",
+            icon: "success",
+          });
+          navigate("/accesos");
           resetForm();
-          setFormularioEnviado(true);
-          setTimeout(() => setFormularioEnviado(false), 5000);
-          setSentidoSeleccionado(valores.sentido);
-          console.log('Formulario enviado');
         }}
-        
       >
-        {({ values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
-          <Form className="formulario" onSubmit={handleSubmit}>
-            <div className="form-floating mb-3">
-              <label htmlFor="numeroDocumento"  for="floatingInput"></label>
-              <Field
-                className='class="form-control"'
-                type="text"
-                id="numeroDocumento"
-                name="numeroDocumento"
-                placeholder="Cedula"
-                value={values.numeroDocumento}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {touched.numeroDocumento && errors.numeroDocumento && (
-                <div className="--bs-danger">{errors.numeroDocumento}</div>
-              )}
-            </div>
-            <div className="form-check">
-              <label className="form-check-label" for="flexRadioDefault1">
-                <Field type="radio" name="sentido" value="ingreso" checked={values.sentido === 'ingreso'} />
-                Ingreso
-              </label>
-              <label className="form-check-label">
-                <Field type="radio" name="sentido" value="salida" checked={values.sentido === 'salida'} />
-                Salida
-              </label>
-              {touched.sentido && errors.sentido && <div className="--bs-danger">{errors.sentido}</div>}
-            </div>
-            <div>
-              <button type="submit" className="btn btn-outline-success">Registrar</button>
-              {formularioEnviado && (
-                <p>
-                  {sentidoSeleccionado === 'ingreso'
-                    ? 'Ingreso Registrado'
-                    : sentidoSeleccionado === 'salida'
-                    ? 'Salida Registrada'
-                    : ''}
-                </p>
-              )}
-            </div>
-          </Form>
+        {({
+          values,
+          errors,
+          touched,
+          handleSubmit,
+          handleChange,
+          handleBlur,
+        }) => (
+          
+          <div className="login template d-flex justify-content-center align-items-center 100-w vh-100 bg-dark-subtle" >
+              <div className="40-w p-5 rounded bg-white">
+                <Form className="formulario" onSubmit={handleSubmit}>
+                  <h3 className="fw-bold text-center">Registro de Accesos</h3>
+                  <div className="mb-2">
+                    <label htmlFor="numeroDocumento" className="form-label">Cedula</label>
+                    <Field
+                      className='form-control'
+                      type="text"
+                      id="numeroDocumento"
+                      name="numeroDocumento"
+                      placeholder="Cedula"
+                      value={values.numeroDocumento}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      />
+                    {touched.numeroDocumento && errors.numeroDocumento && (
+                      <div className="error">{errors.numeroDocumento}</div>
+                      )}
+                  </div>
+                  <div className="mb-4 form-check" >
+                    <label className="form-check-label">
+                      <Field
+                        className="form-check-input"
+                        type="radio"
+                        name="sentido"
+                        value="ingreso"
+                        checked={values.sentido === "ingreso"}
+                        />
+                      Ingreso
+                    </label >
+                    </div>
+                    <div className="mb-4 form-check" >
+                    <label className="form-check-label">
+                      <Field
+                        className="form-check-input"
+                        type="radio"
+                        name="sentido"
+                        value="salida"
+                        checked={values.sentido === "salida"}
+                        />
+                      Salida
+                    </label>
+                    {touched.sentido && errors.sentido && (
+                      <div className="error">{errors.sentido}</div>
+                      )}
+                  </div>
+                  <div className="d-grid">
+                    <button type="submit" class="btn btn-success">Registrar</button>
+                    {formularioEnviado && (
+                      <p>
+                        {sentidoSeleccionado === "ingreso"
+                          ? "Ingreso Registrado"
+                          : sentidoSeleccionado === "salida"
+                          ? "Salida Registrada"
+                          : ""}
+                      </p>
+                    )}
+                    <Clock/>
+                  </div>
+                </Form>
+              </div>            
+          </div>
         )}
       </Formik>
     </>
