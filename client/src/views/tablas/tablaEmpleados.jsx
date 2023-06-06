@@ -22,14 +22,10 @@ export function TablaEmpleados() {
                 Agregar empleado +
             </button>
         </Link>
-
-
-        <Link to='/accesos' className="mb-2 mr-2">
-        <button type="button" class="btn btn-outline-info">Tablero Trafico</button>
-        </Link>
       <table class="table">
         <thead>
           <tr>
+            <th scope="col">Foto</th>
             <th scope="col">Tipo de documento</th>
             <th scope="col">Numero de documento</th>
             <th scope="col">Nombre</th>
@@ -42,6 +38,9 @@ export function TablaEmpleados() {
             ? empleados.map((element, index) => {
                 return (
                   <tr key={element.id}> 
+                    <td>
+                     <img src={element.image} style={{ borderRadius: '50%', width: '70px', height: '70px' }} />
+                    </td>
                     <td>{element.tipoDocumento}</td>
                     <td>{element.numeroDocumento}</td>
                     <td>{element.nombre}</td>

@@ -6,6 +6,7 @@ import { TablaEmpleados } from '../views/tablas/tablaEmpleados';
 import { TablaAccesos } from '../views/tablas/tablaAccesos';
 
 
+
 export const AppRouter = () => {
   return (
     <Routes>

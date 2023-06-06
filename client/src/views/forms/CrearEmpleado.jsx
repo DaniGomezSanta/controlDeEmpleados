@@ -11,9 +11,30 @@ import { NavBar } from "../../features/NavBar";
 export const CrearEmpleado = () => {
 
   const errorAuth = useSelector((state) => state.errores.errorAuth);
+  const [loading, setLoading] = useState(false); 
+  const [image, setImage] = useState("");
 
   console.log("error en crear empleado", errorAuth.message);
   const dispatch = useDispatch();
+
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    console.log("FILES", files);
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "ecommerce");
+    setLoading(true);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dyfjoi0td/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const file = await res.json();
+    setImage(file.secure_url);
+    setLoading(false);
+  };
 
 
   useEffect(() => {
@@ -37,7 +58,7 @@ export const CrearEmpleado = () => {
   }, [errorAuth]);
 
   return (
-    <>
+    <div >
     <NavBar/>
       <Formik
         initialValues={{
@@ -46,6 +67,7 @@ export const CrearEmpleado = () => {
           tipoDocumento: "",
           numeroDocumento: "",
           autorizacion: "",
+          image:"",
         }}
        
         onSubmit={(valores, { resetForm }) => {
@@ -69,15 +91,8 @@ export const CrearEmpleado = () => {
         }) => (
 
           <div className="login template d-flex justify-content-center align-items-center vh-100 bg-dark-subtle">
-          <div className="container">
+          <div className="container mt-4">
             <div className="row justify-content-center">
-                  <div className="d-flex justify-content-between mb-3">
-                      <Link to="/admin">
-                        <button className="btn btn-primary">
-                           Volver
-                        </button>
-                      </Link>
-                    </div>
               <div className="col-md-6">
                 <div className="card">
                   <div className="card-body">
@@ -152,7 +167,23 @@ export const CrearEmpleado = () => {
                           Inactivo
                         </label>
                       </div>
-        
+
+                      <p hidden>{(values.image = image)}</p>
+                        <label>Foto:</label>
+                        <input
+                          className="form-control"
+                          type="file"
+                          id="image"
+                          name="image"
+                          onChange={uploadImage}
+                          onBlur={handleBlur}
+                        />
+                        {loading ? (
+                          <img src="https://tradinglatam.com/wp-content/uploads/2019/04/loading-gif-png-4.gif" />
+                        ) : (
+                          <img src={image} width="230px"
+                          className="mt-3" />
+                        )}
                       <div className="text-center">
                         <button className="btn btn-success" type="submit">Crear Empleado</button>
                       </div>
@@ -165,6 +196,6 @@ export const CrearEmpleado = () => {
         </div>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
