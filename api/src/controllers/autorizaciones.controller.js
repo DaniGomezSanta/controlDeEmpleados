@@ -1,4 +1,5 @@
 import { Autorizacion } from "../models/Autorizacion.js";
+import { Empleado } from "../models/Empleado.js";
 // import { Empleado } from "../models/Empleado.js";
 // import {verificarCoherenciaMovimientos} from "./validacion.js";
 
@@ -14,6 +15,23 @@ export const postMovimientos = async(req, res) => {
         if(sentido !== 'ingreso' && sentido !== 'salida'){
             return res.status(400).json({message: 'Sentido Invalido'});
         }
+
+        // codigo para verificar si el empleado esta autorizado a entrar 
+
+        const empleadoAutorizado = await Empleado.findOne({
+            where:{
+                numeroDocumento,
+                autorizacion: true
+            }
+        });
+
+        if(!empleadoAutorizado){
+            return res.status(400).json({message: 'No esta autorizado para ingresar'});
+        }
+
+        // -------------------------------------------------------------------
+
+
 
         const ultimoMovimiento = await Autorizacion.findOne({
             where:{
