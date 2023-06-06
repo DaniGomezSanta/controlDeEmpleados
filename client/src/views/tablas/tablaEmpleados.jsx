@@ -4,6 +4,7 @@ import { getAllEmpleados } from "../../store/slices/getEmpleados";
 import { Link } from "react-router-dom";
 import { NavBar } from "../../features/NavBar";
 
+
 export function TablaEmpleados() {
   const dispatch = useDispatch();
 
@@ -31,6 +32,7 @@ export function TablaEmpleados() {
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
             <th scope="col">Autorizacion</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -50,6 +52,7 @@ export function TablaEmpleados() {
                         ? "Esta autorizado"
                         : "No esta autorizado"}
                     </td>
+
                   </tr>
                 );
               })
